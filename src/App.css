@@ -4,3 +4,19 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+button{
+  padding: 8px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin:10px;
+  background-color: lightblue;
+  border: none;
+  font-weight: bold;
+  color:rgb(122, 121, 121);
+}
+
+p{
+  background-color: rgba(216, 191, 216, 0.435);
+  padding: 10px;
+}
