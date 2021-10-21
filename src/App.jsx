@@ -1,11 +1,13 @@
 
 import './App.css'
-import CounterApp from './CounterApp'
+import CounterApp from './components/CounterApp'
+import TodoApp from './components/TodoApp'
 
 function App() {
   return (
     <div className="App">
-      <CounterApp/> 
+      {/* <CounterApp/> */}
+      <TodoApp />
     </div>
   )
 }
