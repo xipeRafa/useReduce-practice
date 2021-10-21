@@ -16,6 +16,7 @@ const TodoApp = () => {
       const reducer = (todos, action) =>{
             switch (action.type) {
                   case TYPES.POST : return [...todos, action.payload ]
+                  case TYPES.PUT : return todos.map(el => el.id === action.payload.id ? action.payload : el)
                   case TYPES.DELETE : return todos.filter(el => el.id !== action.payload)
                   default:return todos;
             }
@@ -28,16 +29,27 @@ const TodoApp = () => {
       const handleText = e =>{
             setText(e.target.value)
       }
-      
+
       const handleSubmit = e =>{
             e.preventDefault()
-
-            const newTodo = {id:Date.now(), title:text}
-            todosDispatch({type:TYPES.POST, payload:newTodo})
-
+            if(edit){
+                  todosDispatch({ type: TYPES.PUT, payload: {...edit, title: text} }) 
+                  setEdit(null)
+            }else{
+                  const newTodo = {id:Date.now(), title:text}
+                  todosDispatch({type:TYPES.POST, payload:newTodo})
+            }
             setText('')
       }
+
       console.log(todos)
+
+      const [edit, setEdit]=useState(null)
+
+      const handleEdit = el =>{
+            setEdit(el)
+            setText(el.title)
+      }
 
       return (
             <div>
@@ -50,6 +62,11 @@ const TodoApp = () => {
                                     <p>{el.title}
                                           <button onClick={()=> todosDispatch({ type: TYPES.DELETE, payload: el.id })}>
                                                 DELETE
+                                          </button>
+
+
+                                          <button onClick={()=> handleEdit(el) }>
+                                                EDIT
                                           </button>
                                     </p>
                               </div>
