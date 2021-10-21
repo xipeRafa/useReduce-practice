@@ -1,8 +1,11 @@
 .App {
   min-height: 100vh;
-  display: flex;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 0;
+}
+*{
+  box-sizing: border-box;
 }
 button{
   padding: 8px;
@@ -17,6 +20,17 @@ button{
 }
 
 p{
-  background-color: rgba(216, 191, 216, 0.435);
+  margin: 0;
   padding: 10px;
+  width: 100%;
+}
+.app{
+  margin:20px 0;
+  background-color: rgba(178, 157, 178, 0.04);
+  padding: 10px;
+}
+
+[type="checkbox"]{
+  width: 20px;
+  height: 20px;
 }

@@ -5,19 +5,21 @@ const TodoApp = () => {
       const TYPES = {
             POST:'POST',
             PUT:'PUT',
-            DELETE:'DELETE'
+            DELETE:'DELETE',
+            TOGGLE:'TOGGLE'
       }
 
       const initialTodos = [
-            {id:1, title:'hello 1'},
-            {id:2, title:'hello 2'},
-            {id:3, title:'hello 3'}
+            {id:1, title:'hello 1', toggle:false},
+            {id:2, title:'hello 2', toggle:false},
+            {id:3, title:'hello 3', toggle:false}
       ]
       const reducer = (todos, action) =>{
             switch (action.type) {
                   case TYPES.POST : return [...todos, action.payload ]
                   case TYPES.PUT : return todos.map(el => el.id === action.payload.id ? action.payload : el)
                   case TYPES.DELETE : return todos.filter(el => el.id !== action.payload)
+                  case TYPES.TOGGLE : return todos.map(el => el.id === action.payload.id ? action.payload : el)
                   default:return todos;
             }
       }
@@ -36,7 +38,7 @@ const TodoApp = () => {
                   todosDispatch({ type: TYPES.PUT, payload: {...edit, title: text} }) 
                   setEdit(null)
             }else{
-                  const newTodo = {id:Date.now(), title:text}
+                  const newTodo = {id:Date.now(), title:text, toggle:false}
                   todosDispatch({type:TYPES.POST, payload:newTodo})
             }
             setText('')
@@ -51,15 +53,19 @@ const TodoApp = () => {
             setText(el.title)
       }
 
+      const handleToggle = el =>{
+            todosDispatch({ type:TYPES.TOGGLE, payload:{...el, toggle: el.toggle = !el.toggle}})
+      }
+
       return (
             <div>
                   <form onSubmit={handleSubmit}>
-                        <input type="text" value={text} onChange={handleText} />
+                        <input type="text" value={text} onChange={handleText} placeholder='type here...'/>
                   </form>
                   {
                         todos.map((el,i)=>(
-                              <div key={i}>
-                                    <p>{el.title}
+                              <div key={i}  className='app'>
+                                    <p>{el.title}</p>
                                           <button onClick={()=> todosDispatch({ type: TYPES.DELETE, payload: el.id })}>
                                                 DELETE
                                           </button>
@@ -68,7 +74,9 @@ const TodoApp = () => {
                                           <button onClick={()=> handleEdit(el) }>
                                                 EDIT
                                           </button>
-                                    </p>
+
+                                          <input type="checkbox" onChange={()=> handleToggle(el)}/>
+                                    
                               </div>
                         )) 
                   }
